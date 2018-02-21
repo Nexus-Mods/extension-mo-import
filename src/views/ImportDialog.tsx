@@ -390,7 +390,7 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
 
   private openLog = (evt) => {
     evt.preventDefault();
-    opn(this.mTrace.logFilePath);
+    opn(this.mTrace.logFilePath).catch(err => undefined);
   }
 
   private nextLabel(step: Step): string {
