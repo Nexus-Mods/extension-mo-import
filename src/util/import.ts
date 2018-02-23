@@ -52,12 +52,18 @@ function importMods(t: I18next.TranslationFunction,
               .then(hash => hash.md5sum)
               .catch(err => ''))
           .then(md5Hash => {
-            store.dispatch(actions.addMod(gameId, toVortexMod(mod, md5Hash)));
+            const archiveId = shortid();
+            store.dispatch(actions.addMod(gameId, toVortexMod(mod, md5Hash, archiveId)));
 
             if (importArchives && !!mod.archiveName) {
               trace.log('info', 'transferring archive', archivePath);
               progress(mod.modName + ' (' + t('Archive') + ')', idx / len);
-              return transferArchive(archivePath, downloadPath, true);
+              return fs.statAsync(archivePath)
+                .then(stats => {
+                  store.dispatch(actions.addLocalDownload(
+                    archiveId, gameId, path.basename(archivePath), stats.size));
+                  return transferArchive(archivePath, downloadPath, true);
+                });
             } else {
               return Promise.resolve();
             }
