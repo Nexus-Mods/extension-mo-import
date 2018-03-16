@@ -367,7 +367,6 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
   }
 
   private setImportPath(newImportPath: string) {
-    const { t, discovered, gameId } = this.props;
     this.nextState.importPath = newImportPath;
     this.mUpdatePathDebouncer.schedule();
   }

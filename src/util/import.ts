@@ -63,6 +63,14 @@ function importMods(t: I18next.TranslationFunction,
                   store.dispatch(actions.addLocalDownload(
                     archiveId, gameId, path.basename(archivePath), stats.size));
                   return transferArchive(archivePath, downloadPath, true);
+                })
+                .catch(err => {
+                  if (err.code === 'ENOENT') {
+                    trace.log('info', 'archive doesn\'t exist');
+                    return Promise.resolve();
+                  } else {
+                    return Promise.reject(err);
+                  }
                 });
             } else {
               return Promise.resolve();
