@@ -42,7 +42,7 @@ function importMods(t: I18next.TranslationFunction,
       return Promise.mapSeries(mods, (mod, idx, len) => {
         trace.log('info', 'transferring', mod);
         progress(mod.modName, idx / len);
-        const archivePath = path.isAbsolute(mod.archiveName)
+        const archivePath = (mod.archiveName === undefined) || path.isAbsolute(mod.archiveName)
           ? mod.archiveName
           : path.join(moConfig.downloadPath, mod.archiveName);
         return transferUnpackedMod(mod, path.join(moConfig.modPath, mod.modName), installPath, true)
