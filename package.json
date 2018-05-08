@@ -30,7 +30,6 @@
     "babel-polyfill": "^6.13.0",
     "bluebird": "^3.4.6",
     "copyfiles": "^1.0.0",
-    "core-error-predicates": "^1.1.0",
     "i18next": "^3.5.1",
     "immutability-helper": "^2.2.2",
     "json-loader": "^0.5.4",

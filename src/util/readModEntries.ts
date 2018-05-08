@@ -1,7 +1,6 @@
 import {IModEntry} from '../types/moEntries';
 
 import * as Promise from 'bluebird';
-import { FileAccessError } from 'core-error-predicates';
 import * as path from 'path';
 import { fs, log, types, util } from 'vortex-api';
 import IniParser, { IniFile, WinapiFormat } from 'vortex-parse-ini';
@@ -40,7 +39,9 @@ function parseMetaIni(modPath: string): Promise<IMetaInfo> {
 function dirsOnly(filePath: string): Promise<boolean> {
   return fs.statAsync(filePath)
       .then(stat => stat.isDirectory())
-      .catch(FileAccessError, () => false);
+      .catch(err => ['EACCESS', 'EPERM'].indexOf(err.code) !== -1
+        ? Promise.resolve(false)
+        : Promise.reject(err));
 }
 
 function readModEntries(basePath: string,
