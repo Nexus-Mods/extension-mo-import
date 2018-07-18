@@ -6,9 +6,7 @@ import readModEntries from '../util/readModEntries';
 import TraceImport from '../util/TraceImport';
 
 import * as Promise from 'bluebird';
-import { remote } from 'electron';
 import * as I18next from 'i18next';
-import opn = require('opn');
 import * as path from 'path';
 import * as React from 'react';
 import { Alert, Button, ControlLabel, DropdownButton, FormControl, FormGroup,
@@ -18,7 +16,7 @@ import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import { ComponentEx, Icon, ITableRowAction, log, Modal, selectors, Spinner, Steps,
-         Table, TableNumericFilter, TableTextFilter, Toggle,
+         Table, TableTextFilter, Toggle,
          tooltip, types, util,
 } from 'vortex-api';
 
@@ -389,7 +387,7 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
 
   private openLog = (evt) => {
     evt.preventDefault();
-    opn(this.mTrace.logFilePath).catch(err => undefined);
+    (util as any).opn(this.mTrace.logFilePath).catch(err => undefined);
   }
 
   private nextLabel(step: Step): string {
