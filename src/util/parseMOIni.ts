@@ -6,6 +6,8 @@ import IniParser, { IniFile, WinapiFormat } from 'vortex-parse-ini';
 interface IIniSpec {
   General: {
     game: string,
+    gameName: string,
+    gamePath: string,
   };
   Settings: {
     download_directory: string,
