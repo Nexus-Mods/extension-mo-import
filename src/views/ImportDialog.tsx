@@ -66,7 +66,7 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
 
     this.initState({
       importStep: undefined,
-      importArchives: false,
+      importArchives: true,
       importEnabled: {},
       instances: [],
       failedImports: [],
