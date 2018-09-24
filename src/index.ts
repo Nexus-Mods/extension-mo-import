@@ -13,7 +13,7 @@ function init(context: types.IExtensionContext): boolean {
 
   context.registerDialog('mo-import', ImportDialog);
 
-  context.registerAction('mod-icons', 120, 'import', {}, 'Import from MO', () => {
+  context.registerAction('mod-icons', 120, 'import', {}, 'Import From MO', () => {
     context.api.store.dispatch(actions.setDialogVisible('mo-import'));
   });
 
