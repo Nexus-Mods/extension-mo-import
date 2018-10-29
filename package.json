@@ -34,7 +34,6 @@
     "immutability-helper": "^2.2.2",
     "json-loader": "^0.5.4",
     "modmeta-db": "Nexus-Mods/modmeta-db",
-    "vortex-parse-ini": "Nexus-Mods/vortex-parse-ini",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.6",
     "react-dom": "^15.3.2",
@@ -42,6 +41,7 @@
     "semver": "^5.3.0",
     "ts-loader": "2.3.4",
     "vortex-api": "Nexus-Mods/vortex-api",
+    "vortex-parse-ini": "Nexus-Mods/vortex-parse-ini",
     "webpack": "^3.5.6"
   }
 }
