@@ -76,7 +76,7 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
 
     this.mUpdatePathDebouncer = new util.Debouncer(() => {
       const { t, discovered, gameId } = this.props;
-      const { importPath, importPathInvalid } = this.state;
+      const { importPath } = this.state;
       return parseMOIni(discovered, importPath)
         .then(moconfig => {
           this.nextState.importPathInvalid = (moconfig.game === convertGameId(gameId))
@@ -250,7 +250,7 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
         <InputGroup>
           <FormControl
             type='text'
-            value={importPath}
+            value={importPath || ''}
             onChange={this.setImportPathEvt}
           />
           <InputGroup.Button>
