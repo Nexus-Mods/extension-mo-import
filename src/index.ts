@@ -1,8 +1,7 @@
-import findInstances from './util/findInstances';
 import ImportDialog from './views/ImportDialog';
 
 import * as path from 'path';
-import { actions, selectors, types } from 'vortex-api';
+import { actions, types } from 'vortex-api';
 
 function init(context: types.IExtensionContext): boolean {
   if (process.platform !== 'win32') {

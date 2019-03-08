@@ -534,7 +534,13 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
         name: 'Mod Id',
         description: 'Nexus id of the mod',
         icon: 'id-badge',
-        calc: (mod: IModEntry) => mod.nexusId,
+        calc: (mod: IModEntry) => {
+          try {
+            return parseInt(mod.nexusId, 10);
+          } catch (err) {
+            return 0;
+          }
+        },
         placement: 'both',
         isToggleable: true,
         isSortable: true,
