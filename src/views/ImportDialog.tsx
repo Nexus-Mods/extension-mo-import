@@ -12,7 +12,7 @@ import * as React from 'react';
 import { Alert, Button, ControlLabel, DropdownButton, FormControl, FormGroup,
   InputGroup, MenuItem, ProgressBar,
 } from 'react-bootstrap';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import { ComponentEx, Icon, ITableRowAction, log, Modal, selectors, Spinner, Steps,
@@ -629,6 +629,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<types.IState>): IActionProp
   };
 }
 
-export default translate([ 'common' ], { wait: false })(
+export default withTranslation([ 'common' ])(
   connect(mapStateToProps, mapDispatchToProps)(
-    ImportDialog)) as React.ComponentClass<{}>;
+    ImportDialog) as any) as React.ComponentClass<IBaseProps>;
