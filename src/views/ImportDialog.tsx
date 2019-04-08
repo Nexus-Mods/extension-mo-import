@@ -466,6 +466,21 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
     const enabledMods = modList.filter(mod => this.isModEnabled(mod));
 
     this.mTrace.initDirectory(importPath)
+      .catch(err => {
+        // Some file operation has failed when we attempted to create the log
+        //  directory; no point in continuing past this point given that this is a clear
+        //  sign that something is blocking Vortex file operations.
+        const errorMessage = (err.code === 'EPERM')
+          ? 'Vortex does not have sufficient permissions to run file operations. '
+            + 'Please ensure your user has full read/write permissions and/or that Vortex '
+            + 'is not being blocked by your Anti-Virus and then try again.'
+          : err;
+        this.context.api.showErrorNotification('Failed to start import process',
+          errorMessage, { allowReport: err.code !== 'EPERM' });
+        this.nextState.failedImports = modList.map(mod => mod.modName);
+        this.setStep('review');
+        return Promise.resolve();
+      })
       .then(() => importMods(t, this.context.api.store, this.mTrace,
         importMOConfig, enabledMods, importArchives,
         (mod: string, perc: number) => {
