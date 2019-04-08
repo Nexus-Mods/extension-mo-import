@@ -23,9 +23,14 @@ function parseMetaIni(modPath: string): Promise<IMetaInfo> {
   return parser.read(path.join(modPath, 'meta.ini'))
       .then((ini: any) => {
         const fileId = ini.data.installedFiles !== undefined
-          ? ini.data.installedFiles['1\\fileid']
+          ? ini.data.installedFiles['1\\fileid'] || ini.data.installedFiles['1\\fileId']
           : undefined;
-        const categoryIds = ini.data.General.category.replace(/^"|"$/g, '').split(',');
+        // MO2 category ids seem to be missing under certain circumstances
+        //  such as when importing automaton "modPacks" with MO included.
+        // (specifically when used with the ULTIMATE SKYRIM automaton mod pack)
+        const categoryIds = ini.data.General.category !== undefined
+          ? ini.data.General.category.replace(/^"|"$/g, '').split(',')
+          : [];
         return {
           modid: parseInt(ini.data.General.modid, 10),
           fileid: fileId !== undefined ? parseInt(fileId, 10) : undefined,
