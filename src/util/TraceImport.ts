@@ -26,7 +26,14 @@ class TraceImport {
         this.mLogFile = stream;
         return fs.copyAsync(
           path.join(importPath, 'ModOrganizer.ini'),
-          path.join(this.mPath, 'ModOrganizer.ini'));
+          path.join(this.mPath, 'ModOrganizer.ini'))
+        .catch(err => {
+          // Failed to copy over the ini file but that shouldn't stop us from
+          //  attempting to transfer the mods. Can't be 'ENOENT' as we wouldn't
+          //  have reached this point if it were.
+          this.log('warn', 'Failed to copy ModOrganizer.ini file', err);
+          return Promise.resolve();
+        });
       });
   }
 
