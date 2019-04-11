@@ -64,6 +64,27 @@ function importMods(t: I18next.TranslationFunction,
                     archiveId, gameId, path.basename(archivePath), stats.size));
                   return transferArchive(archivePath, downloadPath, true);
                 })
+                .tap(() => {
+                  // Attempt to set metadata information for the newly added archive.
+                  if (mod.nexusId !== '0') {
+                    store.dispatch(
+                      actions.setDownloadModInfo(archiveId, 'source', 'nexus'));
+                    store.dispatch(
+                      actions.setDownloadModInfo(archiveId, 'nexus.ids.modId',
+                        parseInt(mod.nexusId, 10)));
+                    store.dispatch(
+                      actions.setDownloadModInfo(archiveId, 'nexus.ids.gameId', gameId));
+
+                    if (!!mod.modVersion) {
+                      store.dispatch(
+                        actions.setDownloadModInfo(archiveId, 'version', mod.modVersion));
+                    }
+                    store.dispatch(
+                      actions.setDownloadModInfo(archiveId, 'game', gameId));
+                    store.dispatch(
+                      actions.setDownloadModInfo(archiveId, 'name', mod.modName));
+                  }
+                })
                 .catch(err => {
                   if (err.code === 'ENOENT') {
                     trace.log('info', 'archive doesn\'t exist');
