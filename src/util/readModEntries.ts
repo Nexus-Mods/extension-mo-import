@@ -31,8 +31,14 @@ function parseMetaIni(modPath: string): Promise<IMetaInfo> {
         const categoryIds = ini.data.General.category !== undefined
           ? ini.data.General.category.replace(/^"|"$/g, '').split(',')
           : [];
+
+        // Since when did the MO2 guys change 'modid' to 'modId' ?
+        const modId = (isNaN(parseInt(ini.data.General.modid, 10)))
+          ? parseInt(ini.data.General.modId, 10)
+          : parseInt(ini.data.General.modid, 10);
+
         return {
-          modid: parseInt(ini.data.General.modid, 10),
+          modid: modId,
           fileid: fileId !== undefined ? parseInt(fileId, 10) : undefined,
           installationFile: ini.data.General.installationFile,
           version: convertMOVersion(ini.data.General.version),
