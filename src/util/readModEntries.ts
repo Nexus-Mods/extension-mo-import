@@ -25,7 +25,6 @@ function guessMOVersion(fileName: string, modId: string): string {
     const extIdx = version.lastIndexOf('.');
     version = version.substring(0, extIdx);
     version = version.replace(/-/g, '.');
-    version = convertMOVersion(version);
     return version;
   }
 }
