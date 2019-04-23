@@ -11,6 +11,25 @@ function convertMOVersion(input: string): string {
   return input.replace(/^[df]/, '');
 }
 
+function guessMOVersion(fileName: string, modId: string): string {
+  // As long as the mod has been downloaded from NexusMods
+  //  we can resolve the mod's version from the archive's filename.
+  //  this is more reliable than using the meta.ini file given that
+  //  MO appends zeroes to mod versions inside the ini file.
+  const pattern = new RegExp(`(?<=${modId}-).*`, 'i');
+  const match = fileName.match(pattern);
+  if (match === null) {
+    return undefined;
+  } else {
+    let version = match[0];
+    const extIdx = version.lastIndexOf('.');
+    version = version.substring(0, extIdx);
+    version = version.replace(/-/g, '.');
+    version = convertMOVersion(version);
+    return version;
+  }
+}
+
 interface IMetaInfo {
   modid: number;
   fileid: number;
@@ -41,7 +60,8 @@ function parseMetaIni(modPath: string): Promise<IMetaInfo> {
           modid: modId,
           fileid: fileId !== undefined ? parseInt(fileId, 10) : undefined,
           installationFile: ini.data.General.installationFile,
-          version: convertMOVersion(ini.data.General.version),
+          version: guessMOVersion(ini.data.General.installationFile, modId.toString())
+                || convertMOVersion(ini.data.General.version),
           categoryIds: categoryIds.map(id => parseInt(id, 10)),
         };
       });
