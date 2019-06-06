@@ -69,7 +69,7 @@ function parseMetaIni(modPath: string): Promise<IMetaInfo> {
 function dirsOnly(filePath: string): Promise<boolean> {
   return fs.statAsync(filePath)
       .then(stat => stat.isDirectory())
-      .catch(err => ['EACCESS', 'EPERM'].indexOf(err.code) !== -1
+      .catch(err => ['EACCES', 'EPERM'].indexOf(err.code) !== -1
         ? Promise.resolve(false)
         : Promise.reject(err));
 }
