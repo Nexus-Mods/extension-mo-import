@@ -2,12 +2,13 @@ import { IModEntry } from '../types/moEntries';
 
 import { types } from 'vortex-api';
 
-function toVortexMod(input: IModEntry, md5Hash: string, archiveId: string): types.IMod {
+function toVortexMod(input: IModEntry, md5Hash: string,
+                     archiveId: string): types.IMod {
   const mod: types.IMod = {
-    id: input.modName,
+    id: input.vortexId,
     state: 'installed',
     type: '',
-    installationPath: input.modName,
+    installationPath: input.vortexId,
     archiveId,
     attributes: {
       name: input.modName,

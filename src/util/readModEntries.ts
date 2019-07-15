@@ -80,7 +80,7 @@ function readModEntries(basePath: string,
     .filter((fileName: string) => dirsOnly(path.join(basePath, fileName)))
     .map((modPath: string) => parseMetaIni(path.join(basePath, modPath))
       .then((metaInfo: IMetaInfo): IModEntry => ({
-        vortexId: modPath,
+        vortexId: path.basename(metaInfo.installationFile, path.extname(metaInfo.installationFile)),
         nexusId: metaInfo.modid.toString(),
         downloadId: metaInfo.fileid,
         modName: modPath,
