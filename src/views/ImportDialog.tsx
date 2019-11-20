@@ -5,7 +5,7 @@ import parseMOIni, { IMOConfig } from '../util/parseMOIni';
 import readModEntries from '../util/readModEntries';
 import TraceImport from '../util/TraceImport';
 
-import * as Promise from 'bluebird';
+import Promise from 'bluebird';
 import * as I18next from 'i18next';
 import * as path from 'path';
 import * as React from 'react';

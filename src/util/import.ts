@@ -5,7 +5,7 @@ import { IMOConfig } from './parseMOIni';
 import toVortexMod from './toVortexMod';
 import TraceImport from './TraceImport';
 
-import * as Promise from 'bluebird';
+import Promise from 'bluebird';
 import * as I18next from 'i18next';
 import { genHash } from 'modmeta-db';
 import * as path from 'path';

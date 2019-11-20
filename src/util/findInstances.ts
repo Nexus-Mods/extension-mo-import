@@ -1,6 +1,6 @@
 import parseMOIni from './parseMOIni';
 
-import * as Promise from 'bluebird';
+import Promise from 'bluebird';
 import { remote } from 'electron';
 import * as path from 'path';
 import { fs, types } from 'vortex-api';
