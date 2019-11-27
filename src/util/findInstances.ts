@@ -6,7 +6,7 @@ import * as path from 'path';
 import { fs, types } from 'vortex-api';
 
 export function instancesPath(): string {
-  return path.resolve(remote.app.getPath('appData'), '..', 'local', 'ModOrganizer');
+  return path.resolve(process.env['LOCALAPPDATA'], 'ModOrganizer');
 }
 
 export function convertGameId(input: string): string {

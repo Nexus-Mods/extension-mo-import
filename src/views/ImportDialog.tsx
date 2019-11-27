@@ -277,7 +277,7 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
     const { t } = this.props;
     const { counter, modsToImport, importArchives } = this.state;
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
         <Table
           tableId='mo-mods-import'
           data={modsToImport}
