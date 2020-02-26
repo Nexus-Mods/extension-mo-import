@@ -96,7 +96,7 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
     this.mActions = this.genActions();
   }
 
-  public componentWillReceiveProps(newProps: IProps) {
+  public UNSAFE_componentWillReceiveProps(newProps: IProps) {
     if (!this.props.visible && newProps.visible) {
       this.start();
     }
@@ -293,7 +293,8 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
             {t('Import archives')}
           </a>
         </Toggle>
-      </div>);
+      </div>
+    );
   }
 
   private renderWorking(): JSX.Element {
