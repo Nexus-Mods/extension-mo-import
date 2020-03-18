@@ -10,6 +10,7 @@ interface IIniSpec {
     gamePath: string,
   };
   Settings: {
+    base_directory: string,
     download_directory: string,
     mod_directory: string,
     cache_directory: string,
@@ -66,8 +67,16 @@ function parseMOIni(games: {[gameId: string]: types.IDiscoveryResult},
             'This doesn\'t look like a portable MO install, '
             + 'please check in the instances to the left.'));
         }
-        let downloadPath = path.join(basePath, 'downloads');
-        let modPath = path.join(basePath, 'mods');
+        let dataBasePath = basePath;
+        try {
+          if (file.data.Settings.base_directory) {
+            dataBasePath = file.data.Settings.base_directory;
+          }
+        } catch (err) {
+          // nop
+        }
+        let downloadPath = path.join(dataBasePath, 'downloads');
+        let modPath = path.join(dataBasePath, 'mods');
         try {
           if (file.data.Settings.download_directory) {
             downloadPath = file.data.Settings.download_directory;
