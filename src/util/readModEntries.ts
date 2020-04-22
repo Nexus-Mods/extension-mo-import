@@ -1,6 +1,6 @@
 import {IModEntry} from '../types/moEntries';
 
-import * as Promise from 'bluebird';
+import Promise from 'bluebird';
 import * as path from 'path';
 import { fs, log, types, util } from 'vortex-api';
 import IniParser, { IniFile, WinapiFormat } from 'vortex-parse-ini';
@@ -94,7 +94,7 @@ function readModEntries(basePath: string,
         log('warn', 'failed to read MO mod', { modPath, err: err.message });
         return undefined;
       }))
-    .filter(entry => entry !== undefined)
+    .filter((entry: IModEntry) => entry !== undefined)
     .catch(err => {
       log('warn', 'failed to read MO base path', { basePath, err: err.message });
       return [];

@@ -5,7 +5,7 @@ import parseMOIni, { IMOConfig } from '../util/parseMOIni';
 import readModEntries from '../util/readModEntries';
 import TraceImport from '../util/TraceImport';
 
-import * as Promise from 'bluebird';
+import Promise from 'bluebird';
 import * as I18next from 'i18next';
 import * as path from 'path';
 import * as React from 'react';
@@ -96,7 +96,7 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
     this.mActions = this.genActions();
   }
 
-  public componentWillReceiveProps(newProps: IProps) {
+  public UNSAFE_componentWillReceiveProps(newProps: IProps) {
     if (!this.props.visible && newProps.visible) {
       this.start();
     }
@@ -293,7 +293,8 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
             {t('Import archives')}
           </a>
         </Toggle>
-      </div>);
+      </div>
+    );
   }
 
   private renderWorking(): JSX.Element {
