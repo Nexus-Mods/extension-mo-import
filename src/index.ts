@@ -1,7 +1,24 @@
 import ImportDialog from './views/ImportDialog';
 
 import * as path from 'path';
-import { actions, types } from 'vortex-api';
+import { actions, types, selectors } from 'vortex-api';
+
+const isGameSupported = (context: types.IExtensionContext): boolean => {
+  const state = context.api.store.getState();
+  const gameId: string = selectors.activeGameId(state);
+  return ([
+    'skyrim',
+    'skyrimse',
+    'skyrimvr',
+    'morrowind',
+    'oblivion',
+    'fallout3',
+    'newvegas',
+    'fallout4',
+    'fallout4vr',
+    'enderal'
+  ].indexOf(gameId) !== -1);
+};
 
 function init(context: types.IExtensionContext): boolean {
   if (process.platform !== 'win32') {
@@ -14,7 +31,7 @@ function init(context: types.IExtensionContext): boolean {
 
   context.registerAction('mod-icons', 120, 'import', {}, 'Import From MO', () => {
     context.api.store.dispatch(actions.setDialogVisible('mo-import'));
-  });
+  }, () => isGameSupported(context));
 
   context.once(() => {
     const store = context.api.store;
