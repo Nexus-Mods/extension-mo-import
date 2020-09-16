@@ -74,10 +74,12 @@ function dirsOnly(filePath: string): Promise<boolean> {
         : Promise.reject(err));
 }
 
+const SEPERATOR_SUFFIX = '_separator';
 function readModEntries(basePath: string,
                         mods: { [modId: string]: types.IMod }): Promise<IModEntry[]> {
   return fs.readdirAsync(basePath)
-    .filter((fileName: string) => dirsOnly(path.join(basePath, fileName)))
+    .filter((fileName: string) => dirsOnly(path.join(basePath, fileName))
+                              && !fileName.endsWith(SEPERATOR_SUFFIX))
     .map((modPath: string) => parseMetaIni(path.join(basePath, modPath))
       .then((metaInfo: IMetaInfo): IModEntry => ({
         vortexId: path.basename(metaInfo.installationFile, path.extname(metaInfo.installationFile)),
