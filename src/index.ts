@@ -1,7 +1,7 @@
 import ImportDialog from './views/ImportDialog';
 
 import * as path from 'path';
-import { actions, types, selectors } from 'vortex-api';
+import { actions, selectors, types } from 'vortex-api';
 
 const isGameSupported = (context: types.IExtensionContext): boolean => {
   const state = context.api.store.getState();
@@ -13,10 +13,10 @@ const isGameSupported = (context: types.IExtensionContext): boolean => {
     'morrowind',
     'oblivion',
     'fallout3',
-    'newvegas',
+    'falloutnv',
     'fallout4',
     'fallout4vr',
-    'enderal'
+    'enderal',
   ].indexOf(gameId) !== -1);
 };
 
