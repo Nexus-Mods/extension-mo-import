@@ -2,6 +2,7 @@ import {IModEntry} from '../types/moEntries';
 
 import Promise from 'bluebird';
 import * as path from 'path';
+import { generate as shortid } from 'shortid';
 import { fs, log, types, util } from 'vortex-api';
 import IniParser, { IniFile, WinapiFormat } from 'vortex-parse-ini';
 
@@ -61,7 +62,9 @@ function parseMetaIni(modPath: string): Promise<IMetaInfo> {
           installationFile: ini.data.General.installationFile,
           version: guessMOVersion(ini.data.General.installationFile, modId.toString())
                 || convertMOVersion(ini.data.General.version),
-          categoryIds: categoryIds.map(id => parseInt(id, 10)),
+          categoryIds: categoryIds
+            .map(id => parseInt(id, 10))
+            .filter(id => (id !== -1) && !isNaN(id)),
         };
       });
 }
@@ -81,17 +84,24 @@ function readModEntries(basePath: string,
     .filter((fileName: string) => dirsOnly(path.join(basePath, fileName))
                               && !fileName.endsWith(SEPERATOR_SUFFIX))
     .map((modPath: string) => parseMetaIni(path.join(basePath, modPath))
-      .then((metaInfo: IMetaInfo): IModEntry => ({
-        vortexId: path.basename(metaInfo.installationFile, path.extname(metaInfo.installationFile)),
-        nexusId: metaInfo.modid.toString(),
-        downloadId: metaInfo.fileid,
-        modName: modPath,
-        archiveName: metaInfo.installationFile,
-        modVersion: metaInfo.version,
-        importFlag: true,
-        isAlreadyManaged: util.getSafe(mods, [modPath], undefined) !== undefined,
-        categoryId: metaInfo.categoryIds[0],
-      }))
+      .then((metaInfo: IMetaInfo): IModEntry => {
+        const vortexId =
+          path.basename(metaInfo.installationFile, path.extname(metaInfo.installationFile))
+          || modPath
+          || shortid();
+
+        return {
+          vortexId,
+          nexusId: metaInfo.modid.toString(),
+          downloadId: metaInfo.fileid,
+          modName: modPath,
+          archiveName: metaInfo.installationFile,
+          modVersion: metaInfo.version,
+          importFlag: true,
+          isAlreadyManaged: util.getSafe(mods, [modPath], undefined) !== undefined,
+          categoryId: metaInfo.categoryIds[0],
+        };
+    })
       .catch(err => {
         log('warn', 'failed to read MO mod', { modPath, err: err.message });
         return undefined;
