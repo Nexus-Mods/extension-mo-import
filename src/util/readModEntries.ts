@@ -92,8 +92,8 @@ function readModEntries(basePath: string,
 
         return {
           vortexId,
-          nexusId: metaInfo.modid.toString(),
-          downloadId: metaInfo.fileid,
+          nexusId: !!metaInfo.modid ? metaInfo.modid.toString() : undefined,
+          downloadId: metaInfo.fileid || undefined,
           modName: modPath,
           archiveName: metaInfo.installationFile,
           modVersion: metaInfo.version,
