@@ -1,6 +1,6 @@
 {
   "name": "mo-import",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Import Mods from Mod Organizer",
   "main": "./out/index.js",
   "repository": "",

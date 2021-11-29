@@ -1,5 +1,7 @@
 import {IModEntry} from '../types/moEntries';
 
+import { convertMOVersion, guessMOVersion } from './guessVersion';
+
 import Promise from 'bluebird';
 import * as path from 'path';
 import { generate as shortid } from 'shortid';
@@ -7,28 +9,6 @@ import { fs, log, types, util } from 'vortex-api';
 import IniParser, { IniFile, WinapiFormat } from 'vortex-parse-ini';
 
 const parser: IniParser = new IniParser(new WinapiFormat());
-
-function convertMOVersion(input: string): string {
-  return input.replace(/^[df]/, '');
-}
-
-function guessMOVersion(fileName: string, modId: string): string {
-  // As long as the mod has been downloaded from NexusMods
-  //  we can resolve the mod's version from the archive's filename.
-  //  this is more reliable than using the meta.ini file given that
-  //  MO appends zeroes to mod versions inside the ini file.
-  const pattern = new RegExp(`(?<=${modId}-).*`, 'i');
-  const match = fileName.match(pattern);
-  if (match === null) {
-    return undefined;
-  } else {
-    let version = match[0];
-    const extIdx = version.lastIndexOf('.');
-    version = version.substring(0, extIdx);
-    version = version.replace(/-/g, '.');
-    return version;
-  }
-}
 
 interface IMetaInfo {
   modid: number;
