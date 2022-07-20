@@ -4,10 +4,10 @@ import importMods from '../util/import';
 import parseMOIni, { IMOConfig } from '../util/parseMOIni';
 import readModEntries from '../util/readModEntries';
 import TraceImport from '../util/TraceImport';
+import { joinPaths } from '../util/util';
 
 import Promise from 'bluebird';
 import * as I18next from 'i18next';
-import * as path from 'path';
 import * as React from 'react';
 import { Alert, Button, ControlLabel, DropdownButton, FormControl, FormGroup,
   InputGroup, MenuItem, ProgressBar,
@@ -403,7 +403,7 @@ class ImportDialog extends ComponentEx<IProps, IComponentState> {
   }
 
   private selectSource = eventKey => {
-    this.setImportPath(path.join(instancesPath(), eventKey));
+    this.setImportPath(joinPaths(instancesPath(), eventKey));
   }
 
   private nop = () => undefined;
