@@ -19,7 +19,7 @@ interface IMetaInfo {
 }
 
 function parseMetaIni(modPath: string): Promise<IMetaInfo> {
-  return parser.read(path.join(modPath, 'meta.ini'))
+  return Promise.resolve(parser.read(path.join(modPath, 'meta.ini')))
       .then((ini: any) => {
         const fileId = ini.data.installedFiles !== undefined
           ? ini.data.installedFiles['1\\fileid'] || ini.data.installedFiles['1\\fileId']
